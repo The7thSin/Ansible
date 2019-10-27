@@ -1,0 +1,7 @@
+---
+- name: "WireGuards Server & app setup"
+  hosts: vpn
+  become: true
+  roles:
+    - basic
+    - wireguard

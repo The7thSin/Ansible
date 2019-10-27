@@ -1,3 +1,4 @@
 hosts
 ansible.cfg
-./roles/basic
+/roles/basic
+/roles/wireguard/files/client_public_key

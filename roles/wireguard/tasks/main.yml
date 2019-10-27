@@ -1,0 +1,33 @@
+- name: "Get WireGuard Repo for CentOS"
+  get_url:
+    url: https://copr.fedorainfracloud.org/coprs/jdoss/wireguard/repo/epel-7/jdoss-wireguard-epel-7.repo
+    dest: /etc/yum.repos.d/wireguard.repo
+
+- name: "Install extra packages required for DKMS & WireGuard"
+  yum:
+    name:
+      - epel-release
+    state: present
+
+- name: "Install WireGuard"
+  yum:
+    name:
+      - dkms
+      - wireguard-dkms
+      - wireguard-tools
+    state: present
+
+- name: "Get Files"
+  copy:
+    src: "{{ item }}"
+    dest: "/root"
+  with_fileglob:
+    - "~/PycharmProjects/ansible/roles/wireguard/files/*"
+
+- name: "Run Config"
+  shell: sh wireguard.sh
+
+- name: "Get Server Public Key"
+  fetch:
+    src: /root/server_public_key
+    dest: ~/
