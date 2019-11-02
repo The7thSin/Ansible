@@ -1,0 +1,8 @@
+---
+- name: "Wordpress Docker Setup"
+  host: wordpressdocker
+  become: true
+  roles:
+    - basic
+    - docker
+    - wordpress
