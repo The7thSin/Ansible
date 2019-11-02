@@ -2,3 +2,5 @@ hosts
 ansible.cfg
 /roles/basic
 /roles/wireguard/files/client_public_key
+/roles/wordpress/files/Wordpress/mariadb.env
+/roles/wordpress/files/Wordpress/wordpress.env

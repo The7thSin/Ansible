@@ -1,0 +1,38 @@
+- name: "Install needed packages"
+  dnf:
+    name:
+      - yum-utils
+      - device-mapper-persistent-data
+      - lvm2
+    state: present
+
+- name: "Setup the Repo"
+  shell: yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+
+- name: "Install Docker"
+  dnf:
+    name:
+      - docker-ce
+      - docker-ce-cli
+      - containerd.io
+    state: present
+
+- name: "Start Docker Deamon"
+  shell: systemctl start docker
+
+- name: "Install Docker Compose"
+  shell: curl -L "https://github.com/docker/compose/releases/download/1.24.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+  args:
+    warn: false
+
+- name: "Make Docker Compose executable"
+  file:
+    path: /usr/local/bin/docker-compose
+    state: touch
+    mode: a+x
+
+- name: "Add Docker compose as command"
+  file:
+    src: /usr/local/bin/docker-compose
+    dest: /usr/bin/docker-compose
+    state: link
