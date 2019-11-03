@@ -1,20 +1,28 @@
 # Work in progress
 
 - name: "Create docker network"
-  shell: docker network create -d bridge nginx-proxy
+  docker_network:
+    name: nginx-proxy
+    driver: bridge
+    state: present
 
 # TODO change this to copy from local
-- name: "Get reverse proxy setup"
-  shell: git clone https://github.com/The7thSin/Docker.git
+# Get Nginx Proxy from my repo
+- git:
+    repo: https://github.com/The7thSin/Docker.git
+    dest: Docker/
 
+# TODO change path for execution
 - name: "Start Nginx Proxy Container"
   shell: docker-compose pull && docker-compose up -d
   args:
-    chdir: Nginx-Proxy-SSL/
+    chdir: Docker/Nginx-Proxy-SSL/
 
-# TODO create docker compose script and add to file
-# TODO copy from local
--
+- name: "Copy Wordpress Docker Compose"
+  copy:
+    src: ./files/Wordpress
+    dest: /home/$USER/
+
 - name: "Wordpress Setup"
   shell: docker-compose pull && docker-compose up -d
   args:

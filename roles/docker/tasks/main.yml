@@ -17,6 +17,9 @@
       - containerd.io
     state: present
 
+- name: "Python Docker"
+  shell: pip install docker-py
+
 - name: "Start Docker Deamon"
   shell: systemctl start docker
 

@@ -3,5 +3,7 @@
   hosts: wordpressdocker
   become: true
   roles:
+    - basic
     - docker
+    - wordpress
 

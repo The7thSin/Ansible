@@ -8,6 +8,8 @@ services:
       restart: always
       env_file:
         - ./mariadb.env
+      networks:
+        - proxy-tier
 
     wordpress:
       depends_on:
@@ -20,5 +22,12 @@ services:
         - ./wordpress.env
       environment:
         - WORDPRESS_DB_HOST=db:3306
+      networks:
+        - proxy-tier
 volumes:
   db-data:
+
+networks:
+  proxy-tier:
+    external:
+      name: nginx-proxy
